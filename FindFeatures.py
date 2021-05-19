@@ -1,5 +1,3 @@
-# python findFeatures.py -t dataset/
-
 
 from os.path import isdir
 import cv2
@@ -12,12 +10,6 @@ from scipy.cluster.vq import *
 from sklearn import preprocessing
 
 
-# parser = ap.ArgumentParser()
-# parser.add_argument("-t", "--trainingSet",
-#                     help="Path to Training Set", required="True")
-# args = vars(parser.parse_args())
-
-# Get the training classes names and store them in a list
 train_path = "moeimouto-faces/"  # 训练样本文件夹路径
 training_names = os.listdir(train_path)
 NUM_WORDS = 200  # 聚类中心数
