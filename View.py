@@ -15,15 +15,12 @@ class PictureSearch(QWidget):
         self.choose_lable = QLabel(self)
         self.choose_lable.resize(300, 300)
         self.choose_lable.move(80, 100)
-        self.choose_lable.setStyleSheet("QLabel{background:white;}"
-                                        "QLabel{color:rgb(300,300,300);font-size:10px;font-weight:bold;font-family:宋体;}"
-                                        )
+        self.choose_lable.setStyleSheet("QLabel{background:white;}")
+
         self.search_lable = QLabel(self)
         self.search_lable.resize(300, 300)
         self.search_lable.move(480, 100)
-        self.search_lable.setStyleSheet("QLabel{background:white;}"
-                                        "QLabel{color:rgb(300,300,300);font-size:10px;font-weight:bold;font-family:宋体;}"
-                                        )
+        self.search_lable.setStyleSheet("QLabel{background:white;}")
 
         self.choose_button = QPushButton(self)
         self.choose_button.setText("打开图片")

@@ -13,10 +13,6 @@ import numpy as np
 from pylab import *
 
 
-def add(x, y):
-    return x+y
-
-
 def search_image(image_path):
     mpl.rcParams['font.sans-serif'] = ['SimHei']
     # Load the classifier, class names, scaler, number of clusters and vocabulary
