@@ -1,5 +1,7 @@
 import sys
 from PyQt5 import QtWidgets, QtCore, QtGui
+
+from PyQt5.QtGui import QPalette, QBrush, QPixmap
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
@@ -11,6 +13,11 @@ class PictureSearch(QWidget):
         super(PictureSearch, self).__init__()
         self.resize(800, 500)
         self.setWindowTitle("PictureSearch")
+
+        self.palette = QPalette()
+        self.palette.setBrush(QPalette.Background, QBrush(
+            QPixmap("image/background.jpg")))
+        self.setPalette(self.palette)
         self.imgName = ""
         self.choose_lable = QLabel(self)
         self.choose_lable.resize(300, 300)
@@ -24,13 +31,14 @@ class PictureSearch(QWidget):
 
         self.choose_button = QPushButton(self)
         self.choose_button.setText("打开图片")
-        self.choose_button.move(180, 30)
+        self.choose_button.move(130, 30)
+        self.choose_button.resize(200, 50)
         self.choose_button.clicked.connect(self.choose_image)
 
         self.search_button = QPushButton(self)
         self.search_button.setText("检索图片")
-        self.search_button.move(550, 30)
-
+        self.search_button.move(520, 30)
+        self.search_button.resize(200, 50)
         self.search_button.clicked.connect(self.search_image)
 
     def choose_image(self):

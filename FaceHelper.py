@@ -25,4 +25,4 @@ def FindFace(filename, cascade_file="lbpcascade_animeface.xml"):
 
 
 if __name__ == '__main__':
-    detect('1.jpg')
+    FindFace('1.jpg')
