@@ -49,7 +49,7 @@ class PictureSearch(QWidget):
         self.choose_lable.setPixmap(image)
 
     def search_image(self):
-        find_image = FindImage.search_image(self.imgName)
+        find_image, _ = FindImage.search_image(self.imgName)
         image = QtGui.QPixmap(find_image).scaled(
             self.search_lable.width(), self.search_lable.height())
         self.search_lable.setPixmap(image)

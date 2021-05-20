@@ -5,7 +5,6 @@ import numpy as np
 import os
 import joblib
 from tqdm import tqdm
-import time
 
 
 train_path = "moeimouto-faces/"  # 训练样本文件夹路径
@@ -19,7 +18,7 @@ des_list = []
 
 def load():
     global image_paths
-    for name in training_names[0:10]:
+    for name in training_names[0:4]:
         if os.path.isdir(train_path + "/" + name) == True:
             ls = os.listdir(train_path + "/" + name)
             true_len = 0

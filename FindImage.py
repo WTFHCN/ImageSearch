@@ -1,7 +1,5 @@
 
 
-from PIL import Image
-import argparse as ap
 import cv2
 import numpy as np
 import joblib
@@ -11,6 +9,16 @@ from sklearn import preprocessing
 import numpy as np
 
 from pylab import *
+
+
+def find_name(str):
+    l = 0
+    r = 0
+    for i in range(len(str)):
+        if str[i] == '/':
+            l = r
+            r = i
+    return str[l+1:r]
 
 
 def search_image(image_path):
@@ -59,7 +67,7 @@ def search_image(image_path):
         str = image_paths[ID]
         str = str.replace('\\', '/')
 
-        return str
+        return (str, find_name(str))
         # gray()
         # subplot(5, 5, i+6)
         # imshow(img)
