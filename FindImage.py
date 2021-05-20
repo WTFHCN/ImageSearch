@@ -56,7 +56,10 @@ def search_image(image_path):
    # print(rand_ID[0][0])
 
     for i, ID in enumerate(rank_ID[0][0:1]):
-        return image_paths[ID]
+        str = image_paths[ID]
+        str = str.replace('\\', '/')
+
+        return str
         # gray()
         # subplot(5, 5, i+6)
         # imshow(img)
