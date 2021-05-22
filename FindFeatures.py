@@ -9,22 +9,24 @@ from tqdm import tqdm
 
 train_path = "train"  # 训练样本文件夹路径
 training_names = os.listdir(train_path)
-NUM_WORDS = 100  # 聚类中心数
-sift_det = cv2.xfeatures2d.SIFT_create()
+NUM_WORDS = 200  # 聚类中心数
+sift_det = cv2.SIFT_create()
 image_paths = []
 image_set = {}
 des_list = []
 
 
 def load():
+    print("开始读取")
     global image_paths
-    for name in training_names:
+    
+    for name in tqdm(training_names):
         imageDir = os.path.join(train_path, name)
         if os.path.isdir(imageDir) == True:
             ls = os.listdir(imageDir)
             true_len = 0
             for training_name in ls:
-                if training_name.find('.jpg') != -1:
+                if training_name.find('.jpg') != -1 or training_name.find('.png') != -1:
                     image_path = os.path.join(imageDir, training_name)
                     image_paths += [image_path]
                     true_len += 1
@@ -37,22 +39,18 @@ def extraction_KeyPointAndEigenvector(img):
     return (kp, des)
 
 
-
 def eigenvector():
     print("提取特征")
     for name, count in tqdm(image_set.items()):
-        dir_data = train_path + name
+        dir_data = os.path.join(train_path, name)
         if os.path.isdir(dir_data) == True:
             image_list = os.listdir(dir_data)
             for image in image_list:
-                filename = dir_data + "/" + image
-                if image.find('jpg') != -1:
-                   
+                filename = os.path.join(dir_data, image)
+                if image.find('jpg') != -1 or image.find('png') != -1:
                     kp, des = extraction_KeyPointAndEigenvector(
                         cv2.imread(filename))
                     des_list.append((filename, des))
-
-
 
 
 def begin_kmeans():

@@ -27,7 +27,7 @@ def search_image(image_path):
     im_features, image_paths, idf, numWords, voc = joblib.load("bow.pkl")
 
     # Create feature extraction and keypoint detector objects
-    sift_det = cv2.xfeatures2d.SIFT_create()
+    sift_det = cv2.SIFT_create()
     # List where all the descriptors are stored
     des_list = []
 

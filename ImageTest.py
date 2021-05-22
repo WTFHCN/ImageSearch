@@ -7,7 +7,7 @@ import joblib
 from tqdm import tqdm
 import FindImage
 
-test_path = "test"  # 训练样本文件夹路径
+test_path = "train"  # 训练样本文件夹路径
 testing_names = os.listdir(test_path)
 image_paths = []
 image_set = {}
@@ -22,7 +22,7 @@ def test():
         if os.path.isdir(next_dir) == True:
             ls = os.listdir(next_dir)
             for testing_name in ls:
-                if testing_name.find('.jpg') != -1:
+                if testing_name.find('.jpg') != -1 or testing_name.find('.png') != -1:
                     image_path = os.path.join(next_dir, testing_name)
                     tot_sum += 1
                     _, image_name = FindImage.search_image(image_path)
