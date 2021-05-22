@@ -1,13 +1,24 @@
 import cv2
-import os.path
+import os
+from tqdm import tqdm
 
+
+image_path='datelist'
+image_face_path='face'
+def FaceALL():
+    image_list = os.listdir(image_path)
+    for name in tqdm(image_list):
+        if os.path.isfile(os.path.join(image_path,name)):
+            FindFace(name)
 
 def FindFace(filename, cascade_file="lbpcascade_animeface.xml"):
     if not os.path.isfile(cascade_file):
         raise RuntimeError("%s: not found" % cascade_file)
-
+   
     cascade = cv2.CascadeClassifier(cascade_file)
-    image = cv2.imread(filename, cv2.IMREAD_COLOR)
+    image = cv2.imread(os.path.join(image_path,filename), cv2.IMREAD_COLOR)
+    tmp_image = image
+    #cv2.imwrite(os.path.join(os.path.join(image_path,image_face_path),filename), tmp_image)
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
     gray = cv2.equalizeHist(gray)
 
@@ -18,11 +29,12 @@ def FindFace(filename, cascade_file="lbpcascade_animeface.xml"):
                                      minSize=(24, 24))
     #image_face = []
     i = 0
+    
     for (x, y, w, h) in faces:
         #cv2.rectangle(image, (x, y), (x + w, y + h), (0, 0, 255), 2)
-        tmp_image = image[(y-h//5):(y+h), (x-w//5):(x+w)]
-        cv2.imwrite(str(i)+filename, tmp_image)
+        tmp_image = image[max(y-h//5,0):(y+h), max(x-w//5,0):(x+w)]
+        cv2.imwrite(os.path.join(os.path.join(image_path,image_face_path),filename), tmp_image)
 
 
 if __name__ == '__main__':
-    FindFace('1.jpg')
+    FaceALL()
