@@ -19,7 +19,7 @@ des_list = []
 def load():
     print("开始读取")
     global image_paths
-    
+
     for name in tqdm(training_names):
         imageDir = os.path.join(train_path, name)
         if os.path.isdir(imageDir) == True:
@@ -57,7 +57,8 @@ def begin_kmeans():
     descriptors = des_list[0][1]
 
     print('生成向量数组')
-    for _, descriptor in tqdm(des_list[1:]):
+    for name, descriptor in tqdm(des_list[1:]):
+        # print(name)
         # print(descriptor.shape)
         descriptors = np.vstack((descriptors, descriptor))
 

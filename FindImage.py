@@ -62,15 +62,18 @@ def search_image(image_path):
     # axis('off')
 
    # print(rand_ID[0][0])
-
-    for i, ID in enumerate(rank_ID[0][0:1]):
+    ans = ("", "")
+    for i, ID in enumerate(rank_ID[0][0:20]):
         str = image_paths[ID]
         str = str.replace('\\', '/')
-
-        return (str, find_name(str))
-        # gray()
-        # subplot(5, 5, i+6)
-        # imshow(img)
-        # title('第%d相似' % (i+1))
-        # axis('off')
+        print(find_name(str))
+        if ans == ("", ""):
+            ans = (str, find_name(str))
+    print()
+    return ans
+    # gray()
+    # subplot(5, 5, i+6)
+    # imshow(img)
+    # title('第%d相似' % (i+1))
+    # axis('off')
     # show()

@@ -7,7 +7,7 @@ import joblib
 from tqdm import tqdm
 import FindImage
 
-test_path = "train"  # 训练样本文件夹路径
+test_path = "test"  # 训练样本文件夹路径
 testing_names = os.listdir(test_path)
 image_paths = []
 image_set = {}

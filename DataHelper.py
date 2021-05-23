@@ -44,20 +44,22 @@ def PictureRename():
 
 
 def Make_tarin_test():
+    print("训练和测试分离")
     imagelist_name = os.listdir(date_path)
     for name in tqdm(imagelist_name):
         dir_data = os.path.join(date_path, name)
         if os.path.isdir(dir_data) == True:
+            
             image_list = os.listdir(dir_data)
             tarinimage_list = os.path.join(train_path, name)
             if os.path.exists(tarinimage_list):
                 shutil.rmtree(tarinimage_list)
-                os.mkdir(tarinimage_list)
+            os.mkdir(tarinimage_list)
 
             testimage_list = os.path.join(test_path, name)
             if os.path.exists(testimage_list):
                 shutil.rmtree(testimage_list)
-                os.mkdir(testimage_list)
+            os.mkdir(testimage_list)
             train_num = int(len(image_list)*trainpercentage)
 
             for image in image_list[:train_num]:
@@ -77,6 +79,6 @@ def Make_tarin_test():
 
 
 if __name__ == '__main__':
-    # PictureRename()
+    #PictureRename()
     Make_tarin_test()
     # DirRename()
