@@ -5,6 +5,7 @@ from PyQt5.QtGui import QPalette, QBrush, QPixmap
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
+from numpy.core.defchararray import count
 import FindImage
 
 
@@ -13,7 +14,7 @@ class PictureSearch(QWidget):
         super(PictureSearch, self).__init__()
         self.resize(800, 500)
         self.setWindowTitle("PictureSearch")
-
+        
         self.palette = QPalette()
         self.palette.setBrush(QPalette.Background, QBrush(
             QPixmap("image/background.jpg")))
@@ -24,10 +25,23 @@ class PictureSearch(QWidget):
         self.choose_lable.move(80, 100)
         self.choose_lable.setStyleSheet("QLabel{background:white;}")
 
-        self.search_lable = QLabel(self)
-        self.search_lable.resize(300, 300)
-        self.search_lable.move(480, 100)
-        self.search_lable.setStyleSheet("QLabel{background:white;}")
+        self.search_lable = [0]*4
+        self.showans_lable=QLabel(self)
+       
+        for i in range(4):
+            self.search_lable[i]=QLabel(self)
+            self.search_lable[i].resize(140, 140)
+            self.search_lable[i].setStyleSheet("QLabel{background:white;}")
+        self.search_lable[0].move(480, 100)
+        self.search_lable[1].move(480+150, 100)
+        self.search_lable[2].move(480, 100+150)
+        self.search_lable[3].move(480+150, 100+150)
+
+
+        self.showans_lable.setText("")
+        self.showans_lable.resize(180,30)
+        self.showans_lable.move(350,430)
+        self.showans_lable.setStyleSheet("QLabel{background:white;}")
 
         self.choose_button = QPushButton(self)
         self.choose_button.setText("打开图片")
@@ -47,12 +61,29 @@ class PictureSearch(QWidget):
         image = QtGui.QPixmap(self.imgName).scaled(
             self.choose_lable.width(), self.choose_lable.height())
         self.choose_lable.setPixmap(image)
-
+    def find_much_image(datalist):
+        name_map={}
+        for find_image,name in datalist:
+            if name in name_map :
+                name_map[name]+=1
+            else :
+               name_map[name]=0
+            
+        ans_name=("",0)
+        for name in name_map:
+            #print(name)
+            if name_map[name] > ans_name[1]:
+                ans_name=(name,int(name_map[name]))
     def search_image(self):
-        find_image, _ = FindImage.search_image(self.imgName)
-        image = QtGui.QPixmap(find_image).scaled(
-            self.search_lable.width(), self.search_lable.height())
-        self.search_lable.setPixmap(image)
+        find_image_list = FindImage.search_image(self.imgName)
+       
+        self.showans_lable.setText(find_image_list[0][1])
+        for i in range(4):
+            find_image,name=find_image_list[i]
+
+            image = QtGui.QPixmap(find_image).scaled(
+                self.search_lable[i].width(), self.search_lable[i].height())
+            self.search_lable[i].setPixmap(image)
         # print(FindImage.search_image(self.imgName))
 
 
