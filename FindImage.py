@@ -62,15 +62,12 @@ def search_image(image_path):
     # axis('off')
 
    # print(rand_ID[0][0])
-    ans = ("", "")
-    for i, ID in enumerate(rank_ID[0][0:20]):
+    ans_list=[]
+    for i, ID in enumerate(rank_ID[0][0:10]):
         str = image_paths[ID]
         str = str.replace('\\', '/')
-        print(find_name(str))
-        if ans == ("", ""):
-            ans = (str, find_name(str))
-    print()
-    return ans
+        ans_list.append((str, find_name(str)))
+    return ans_list
     # gray()
     # subplot(5, 5, i+6)
     # imshow(img)
