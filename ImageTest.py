@@ -25,8 +25,8 @@ def test():
                 if testing_name.find('.jpg') != -1 or testing_name.find('.png') != -1:
                     image_path = os.path.join(next_dir, testing_name)
                     tot_sum += 1
-                    _, image_name = FindImage.search_image(image_path)
-                    if image_name == name:
+                    image_name = FindImage.search_image(image_path)
+                    if image_name[0][1] == name:
                         tot_true += 1
     print(tot_true, end="")
     print("/", end="")

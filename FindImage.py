@@ -27,13 +27,14 @@ def search_image(image_path):
     im_features, image_paths, idf, numWords, voc = joblib.load("bow.pkl")
 
     # Create feature extraction and keypoint detector objects
-    sift_det = cv2.SIFT_create()
+    suft_det = cv2.xfeatures2d.SURF_create()
     # List where all the descriptors are stored
     des_list = []
 
     im = cv2.imread(image_path)
     gray = cv2.cvtColor(im, cv2.COLOR_RGB2GRAY)
-    kp, des = sift_det.detectAndCompute(gray, None)
+    #gray = im
+    kp, des = suft_det.detectAndCompute(gray, None)
 
     des_list.append((image_path, des))
 
