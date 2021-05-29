@@ -10,7 +10,7 @@ from tqdm import tqdm
 train_path = "train"  # 训练样本文件夹路径
 training_names = os.listdir(train_path)
 NUM_WORDS = 200  # 聚类中心数
-suft_det = cv2.xfeatures2d.SURF_create()
+surf_det = cv2.xfeatures2d.SURF_create()
 
 image_paths = []
 image_set = {}
@@ -37,7 +37,7 @@ def load():
 def extraction_KeyPointAndEigenvector(img):
     #gray_image = img  # 转化为灰度图
     gray_image = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)  # 转化为灰度图
-    kp, des = suft_det.detectAndCompute(gray_image, None)
+    kp, des = surf_det.detectAndCompute(gray_image, None)
     return (kp, des)
 
 
