@@ -37,38 +37,40 @@ def load():
             image_set[name] = true_len
 
 
-def get_rgb(img,x,y):
-    rgb_f=[]
-    tot=int(img[x,y,1])+int(img[x,y,2])+int(img[x,y,0])+1
-    rgb_f.append(img[x,y,0]/tot)
-    rgb_f.append(img[x,y,1]/tot)
-    rgb_f.append(img[x,y,2]/tot)
+def get_rgb(img, x, y):
+    rgb_f = []
+    tot = int(img[x, y, 1])+int(img[x, y, 2])+int(img[x, y, 0])+1
+    rgb_f.append(img[x, y, 0]/tot)
+    rgb_f.append(img[x, y, 1]/tot)
+    rgb_f.append(img[x, y, 2]/tot)
     return rgb_f
 
-def extraction_KeyPointAndEigenvector(img):
-    #gray_image = img  # 转化为灰度图
-    gray_image = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)  # 转化为灰度图
-    kp, des = surf_det.detectAndCompute(gray_image, None)
-    img=cv2.drawKeypoints(img,kp,img)#绘制关键点
-    points2f = cv2.KeyPoint_convert(kp)
-    newdes_list=[]
-    for i in range(len(des)):
-        y=int(points2f[i][0])
-        x=int(points2f[i][1])
-    
-        rgb_tmp=get_rgb(img,x,y)
-        rgb_tmp=np.hstack((rgb_tmp,get_rgb(img,x,y+1)))
-        rgb_tmp=np.hstack((rgb_tmp,get_rgb(img,x+1,y)))
-        rgb_tmp=np.hstack((rgb_tmp,get_rgb(img,x+1,y+1)))
 
-        newdes=des[i]
-        newdes=np.hstack((newdes,rgb_tmp))
+def extraction_KeyPointAndEigenvector(img):
+
+    gray_image = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
+    kp, des = surf_det.detectAndCompute(gray_image, None)
+
+    points2f = cv2.KeyPoint_convert(kp)
+    newdes_list = []
+    dx = [-1, 1]
+    dy = [1, -1]
+    for i in range(len(des)):
+        y = int(points2f[i][0])
+        x = int(points2f[i][1])
+
+        rgb_tmp = get_rgb(img, x+0, y+0)
+        for px in range(2):
+            for py in range(2):
+                rgb_tmp = np.hstack((rgb_tmp, get_rgb(img, x+px, y+py)))
+        # rgb_tmp = np.hstack((rgb_tmp, get_rgb(img, x, y-1)))
+        # rgb_tmp = np.hstack((rgb_tmp, get_rgb(img, x-1, y)))
+        # rgb_tmp = np.hstack((rgb_tmp, get_rgb(img, x+1, y)))
+        # rgb_tmp = np.hstack((rgb_tmp, get_rgb(img, x, y+1)))
+        newdes = des[i]
+        newdes = np.hstack((newdes, rgb_tmp))
         newdes_list.append(newdes)
-        # if i==0:
-        #     newdes_list=des[i]
-        # else :
-        #     newdes_list=vstack((newdes_list,newdes))
-    newdes_list=np.array(newdes_list)
+    newdes_list = np.array(newdes_list)
     return (kp, newdes_list)
 
 
@@ -84,8 +86,6 @@ def eigenvector():
                     kp, des = extraction_KeyPointAndEigenvector(
                         cv2.imread(filename))
                     des_list.append((filename, des))
-                  
-            
 
 
 def begin_kmeans():
