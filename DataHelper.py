@@ -1,10 +1,18 @@
+from xpinyin import Pinyin
 import os
 import shutil
 from tqdm import tqdm
 date_path = "data"
 train_path = "train"
 test_path = "test"
-trainpercentage = 0.7 # 训练集合与测试百分比
+trainpercentage = 0.7  # 训练集合与测试百分比
+
+
+def CheckImage(image_name):
+    if image_name.find('.png') != -1 or image_name.find('.jpg') != -1 or image_name.find('.jpeg') != -1:
+        return True
+    else:
+        return False
 
 
 def RName(str):
@@ -17,12 +25,13 @@ def RName(str):
 
 
 def DirRename():
-    print("修改文件夹")
+    print("中文变拼音")
     imagelist_name = os.listdir(date_path)
+    p = Pinyin()
     for name in tqdm(imagelist_name):
         if os.path.isdir(os.path.join(date_path, name)):
             os.rename(os.path.join(date_path, name),
-                      os.path.join(date_path, RName(name)))
+                      os.path.join(date_path, p.get_pinyin(name)))
 
 
 def PictureRename():
@@ -34,7 +43,7 @@ def PictureRename():
             image_list = os.listdir(dir_data)
             i = 0
             for image in image_list:
-                if image.find('.png') != -1 or image.find('.jpg') != -1:
+                if CheckImage(image):
                     lastname = os.path.join(dir_data, image)
                     # print(lastname)
                     filename = os.path.join(
@@ -49,7 +58,7 @@ def Make_tarin_test():
     for name in tqdm(imagelist_name):
         dir_data = os.path.join(date_path, name)
         if os.path.isdir(dir_data) == True:
-            
+
             image_list = os.listdir(dir_data)
             tarinimage_list = os.path.join(train_path, name)
             if os.path.exists(tarinimage_list):
@@ -68,17 +77,16 @@ def Make_tarin_test():
                     new_name = os.path.join(
                         os.path.join(train_path, name), image)
                     shutil.copyfile(old_name, new_name)
-            
+
             for image in image_list[train_num:]:
                 if image.find('.png') != -1 or image.find('.jpg') != -1:
                     old_name = os.path.join(dir_data, image)
                     new_name = os.path.join(
                         os.path.join(test_path, name), image)
                     shutil.copyfile(old_name, new_name)
-            
 
 
 if __name__ == '__main__':
-    #PictureRename()
-    Make_tarin_test()
-    # DirRename()
+    # PictureRename()
+    # Make_tarin_test()
+    DirRename()
