@@ -1,5 +1,7 @@
-import ImageCrawler
+import ImageCrawler2
+import urllib
 image_name_path = "name.txt"
+PageNum = 10
 
 
 def main():
@@ -10,8 +12,8 @@ def main():
     for name in name_list:
         print("开始爬取"+name)
         print(len(name))
-        crawler = ImageCrawler.Crawler(0.05)
-        crawler.start(name, 7, 1, 30)
+        InputData = urllib.parse.quote(name)
+        ImageCrawler2.FindLink(PageNum, InputData, name)
 
 
 if __name__ == '__main__':
