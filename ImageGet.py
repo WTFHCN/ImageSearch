@@ -1,7 +1,7 @@
 import ImageCrawler2
 import urllib
 image_name_path = "name.txt"
-PageNum = 10
+PageNum = 7
 
 
 def main():

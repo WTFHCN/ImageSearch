@@ -15,11 +15,14 @@ from bs4 import BeautifulSoup
 # 从得到的图片链接下载图片，并保存
 f = open('out.txt', 'w', encoding='utf-8')
 
+data_path = 'data'
+
 
 def SaveImage(link, InputData, count):
     try:
         time.sleep(0.2)
-        urllib.request.urlretrieve(link, './'+InputData+'/'+str(count)+'.jpg')
+        urllib.request.urlretrieve(
+            link, os.path.join(os.path.join(data_path, InputData), str(count)+'.jpg'))
     except urllib.error.HTTPError as urllib_err:
         print(urllib_err)
     except Exception as err:
@@ -46,8 +49,9 @@ def FindLink(PageNum, InputData, word):
             # print(type(soup))
             # print(soup, file=f)
             # print(soup.decode('utf-8'))
-            if not os.path.exists(word):
-                os.mkdir(word)
+            word_dir = os.path.join(data_path, word)
+            if not os.path.exists(word_dir):
+                os.mkdir(word_dir)
 
             for StepOne in soup.select('.iusc'):
                 link = StepOne.attrs['href']
@@ -60,7 +64,7 @@ def FindLink(PageNum, InputData, word):
                 dict1 = dict(lst_query)  # 将返回的列表转换为字典
                 mediaurl = dict1.get('mediaurl')
 
-                count = len(os.listdir(word)) + 1
+                count = len(os.listdir(word_dir)) + 1
                 SaveImage(mediaurl, word, count)
         except Exception as e:
             print(e)
