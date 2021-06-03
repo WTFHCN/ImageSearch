@@ -5,3 +5,4 @@ test/
 train/
 __pycache__/
 *.txt
+data/
