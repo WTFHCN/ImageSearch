@@ -1,0 +1,10 @@
+.DS_Store
+.vscode/
+__pycache__/
+bow.pkl
+data/
+name.txt
+out.txt
+result.txt
+test/
+train/
