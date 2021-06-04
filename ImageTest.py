@@ -1,38 +1,46 @@
-from sklearn import preprocessing
 from scipy.cluster.vq import *
-import cv2
-import numpy as np
 import os
-import joblib
 from tqdm import tqdm
 import FindImage
 
 test_path = "test"  # 训练样本文件夹路径
-testing_names = os.listdir(test_path)
+result_name = 'result.txt'
 image_paths = []
 image_set = {}
 des_list = []
 
 
 def test():
+    print("开始测试")
+    testing_names = os.listdir(test_path)
     tot_sum = 0
     tot_true = 0
+    result_list = []
     for name in tqdm(testing_names):
         next_dir = os.path.join(test_path, name)
         if os.path.isdir(next_dir) == True:
             ls = os.listdir(next_dir)
+            image_sum = 0
+            image_true = 0
             for testing_name in ls:
                 if testing_name.find('.jpg') != -1 or testing_name.find('.png') != -1:
                     image_path = os.path.join(next_dir, testing_name)
                     tot_sum += 1
+                    image_sum += 1
                     image_name = FindImage.search_image(image_path)
                     for i in range(4):
-                       if image_name[i][1] == name:
+                        if image_name[i][1] == name:
                             tot_true += 1
+                            image_true += 1
                             break
-    print(tot_true, end="")
-    print("/", end="")
-    print(tot_sum)
+            result_list.append((name, image_true, image_sum))
+
+    with open(result_name, 'w') as f:
+        for name, A, B in result_list:
+            tmp_str = name + "识别率: "+str(format(A/B, '.4f') + '\n')
+            f.write(tmp_str)
+        tmp_str = "总体" + "识别率: "+str(format(tot_true/tot_sum, '.4f') + '\n')
+        f.write(tmp_str)
 
 
 def main():

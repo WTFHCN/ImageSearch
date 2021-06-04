@@ -11,6 +11,8 @@ from tqdm import tqdm
 
 
 train_path = "train"  # 训练样本文件夹路径
+
+
 training_names = os.listdir(train_path)
 NUM_WORDS = 200  # 聚类中心数
 surf_det = cv2.xfeatures2d.SURF_create()
@@ -109,14 +111,11 @@ def begin_kmeans():
 
 
 def save_pkl(im_features, image_paths, voc):
-    # Perform Tf-Idf vectorization
     nbr_occurences = np.sum((im_features > 0) * 1, axis=0)
     idf = np.array(np.log((1.0*len(image_paths)+1) /
                           (1.0*nbr_occurences + 1)), 'float32')
-    # Perform L2 normalization
     im_features = im_features*idf
     im_features = preprocessing.normalize(im_features, norm='l2')
-
     print('保存词袋模型文件')
     joblib.dump((im_features, image_paths, idf, NUM_WORDS, voc),
                 "bow.pkl", compress=3)
