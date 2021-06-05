@@ -5,7 +5,7 @@ from tqdm import tqdm
 date_path = "data"
 train_path = "train"
 test_path = "test"
-trainpercentage = 0.7  # 训练集合与测试百分比
+trainpercentage = 0.75  # 训练集合与测试百分比
 
 
 def CheckImage(image_name):
@@ -32,6 +32,16 @@ def DirRename():
         if os.path.isdir(os.path.join(date_path, name)):
             os.rename(os.path.join(date_path, name),
                       os.path.join(date_path, p.get_pinyin(name)))
+
+
+def Finddata():
+    imagelist_name = os.listdir(date_path)
+    for name in tqdm(imagelist_name):
+        dir_data = os.path.join(date_path, name)
+        if os.path.isdir(dir_data) == True:
+            image_list = os.listdir(dir_data)
+            if len(image_list) < 15:
+                print(dir_data)
 
 
 def PictureRename():
@@ -87,6 +97,7 @@ def Make_tarin_test():
 
 
 if __name__ == '__main__':
+    # Finddata()
     # PictureRename()
-    # Make_tarin_test()
-    DirRename()
+    Make_tarin_test()
+    # DirRename()
