@@ -37,9 +37,10 @@ def test():
 
     with open(result_name, 'w') as f:
         for name, A, B in result_list:
-            tmp_str = name + "识别率: "+str(format(A/B, '.4f') + '\n')
+            tmp_str = name + "识别率: "+str(format(A/B*100, '.2f') + '%\n')
             f.write(tmp_str)
-        tmp_str = "总体" + "识别率: "+str(format(tot_true/tot_sum, '.4f') + '\n')
+        tmp_str = "总体" + "识别率: " + \
+            str(format(tot_true/tot_sum*100, '.2f') + '%\n')
         f.write(tmp_str)
 
 

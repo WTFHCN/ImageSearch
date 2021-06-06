@@ -8,7 +8,7 @@ import numpy as np
 import os
 import joblib
 from tqdm import tqdm
-
+import logging
 
 train_path = "train"  # 训练样本文件夹路径
 
@@ -49,7 +49,6 @@ def get_rgb(img, x, y):
 
 
 def extraction_KeyPointAndEigenvector(img):
-
     gray_image = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
     kp, des = surf_det.detectAndCompute(gray_image, None)
 
@@ -85,8 +84,12 @@ def eigenvector():
             for image in image_list:
                 filename = os.path.join(dir_data, image)
                 if image.find('jpg') != -1 or image.find('png') != -1:
-                    kp, des = extraction_KeyPointAndEigenvector(
-                        cv2.imread(filename))
+                    logging.debug(filename)
+                    img = cv2.imread(filename)
+                    if img is None:
+                        logging.error(filename)
+                        continue
+                    kp, des = extraction_KeyPointAndEigenvector(img)
                     des_list.append((filename, des))
 
 
@@ -122,6 +125,8 @@ def save_pkl(im_features, image_paths, voc):
 
 
 def main():
+    logging.basicConfig(filename="FindFeatures.log",
+                        format='%(asctime)s %(filename)s %(levelname)s %(message)s', level=logging.DEBUG, filemode='w')
     load()
     eigenvector()
     im_features, voc, variance = begin_kmeans()

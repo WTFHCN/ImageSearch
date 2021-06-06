@@ -3,8 +3,7 @@
 __pycache__/
 bow.pkl
 data/
-name.txt
-out.txt
-result.txt
+*.txt
+*.log
 test/
 train/
