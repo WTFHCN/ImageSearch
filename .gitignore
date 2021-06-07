@@ -1,8 +1,9 @@
 .DS_Store
 .vscode/
 bow.pkl
+data/
 test/
 train/
 __pycache__/
 *.txt
-data/
+*.log

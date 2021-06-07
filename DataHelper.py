@@ -34,6 +34,21 @@ def DirRename():
                       os.path.join(date_path, p.get_pinyin(name)))
 
 
+def Checknot():
+    name_map = {}
+    imagelist_name = os.listdir(date_path)
+    p = Pinyin()
+    for name in tqdm(imagelist_name):
+        if os.path.isdir(os.path.join(date_path, name)):
+            name_map[name] = 1
+    with open('name.txt', 'r', encoding='utf-8') as f:
+        chinese_name = f.read().split('\n')
+        for name in chinese_name:
+            name_e = p.get_pinyin(name)+'-face'
+            if name_e in name_map:
+                print(name)
+
+
 def Finddata():
     imagelist_name = os.listdir(date_path)
     for name in tqdm(imagelist_name):
@@ -55,7 +70,6 @@ def PictureRename():
             for image in image_list:
                 if CheckImage(image):
                     lastname = os.path.join(dir_data, image)
-                    # print(lastname)
                     filename = os.path.join(
                         dir_data, "image_" + str(i).zfill(4) + ".jpg")
                     os.renames(lastname, filename)
@@ -97,7 +111,17 @@ def Make_tarin_test():
 
 
 if __name__ == '__main__':
-    # Finddata()
-    # PictureRename()
-    Make_tarin_test()
-    # DirRename()
+    while True:
+        print("1: 中文变拼音")
+        print("2: 训练和测试分离")
+        print("3: 批量重命名")
+        print("4: 退出")
+        ipt = input()
+        if ipt == '1':
+            DirRename()
+        elif ipt == '2':
+            Make_tarin_test()
+        elif ipt == '3':
+            PictureRename()
+        elif ipt == '4':
+            break
