@@ -41,7 +41,7 @@ def load():
 
 def get_rgb(img, x, y):
     rgb_f = []
-    tot = int(img[x, y, 1])+int(img[x, y, 2])+int(img[x, y, 0])+1
+    tot = 255
     rgb_f.append(img[x, y, 0]/tot)
     rgb_f.append(img[x, y, 1]/tot)
     rgb_f.append(img[x, y, 2]/tot)
@@ -57,13 +57,13 @@ def extraction_KeyPointAndEigenvector(img):
     dx = [-1, 1]
     dy = [1, -1]
     for i in range(len(des)):
-        y = int(points2f[i][0])
-        x = int(points2f[i][1])
+        x = int(points2f[i][0])
+        y = int(points2f[i][1])
 
         rgb_tmp = get_rgb(img, x+0, y+0)
-        for px in range(2):
-            for py in range(2):
-                rgb_tmp = np.hstack((rgb_tmp, get_rgb(img, x+px, y+py)))
+        # for px in range(dx):
+        #     for py in range(dy):
+        #         rgb_tmp = np.hstack((rgb_tmp, get_rgb(img, x+px, y+py)))
         # rgb_tmp = np.hstack((rgb_tmp, get_rgb(img, x, y-1)))
         # rgb_tmp = np.hstack((rgb_tmp, get_rgb(img, x-1, y)))
         # rgb_tmp = np.hstack((rgb_tmp, get_rgb(img, x+1, y)))

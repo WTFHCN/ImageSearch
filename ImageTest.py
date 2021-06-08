@@ -10,8 +10,8 @@ image_set = {}
 des_list = []
 
 
-def test():
-    print("开始测试")
+def test(N):
+    print(str(N)+"选1开始测试:")
     testing_names = os.listdir(test_path)
     tot_sum = 0
     tot_true = 0
@@ -28,14 +28,14 @@ def test():
                     tot_sum += 1
                     image_sum += 1
                     image_name = FindImage.search_image(image_path)
-                    for i in range(4):
+                    for i in range(N):
                         if image_name[i][1] == name:
                             tot_true += 1
                             image_true += 1
                             break
             result_list.append((name, image_true, image_sum))
 
-    with open(result_name, 'w') as f:
+    with open(result_name, 'a') as f:
         for name, A, B in result_list:
             tmp_str = name + "识别率: "+str(format(A/B*100, '.2f') + '%\n')
             f.write(tmp_str)
@@ -45,7 +45,9 @@ def test():
 
 
 def main():
-    test()
+    test(1)
+    test(4)
+    test(8)
 
 
 if __name__ == '__main__':
