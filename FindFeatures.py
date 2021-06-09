@@ -14,8 +14,8 @@ train_path = "train"  # 训练样本文件夹路径
 
 
 training_names = os.listdir(train_path)
-NUM_WORDS = 200  # 聚类中心数
-surf_det = cv2.xfeatures2d.SURF_create()
+NUM_WORDS = 100  # 聚类中心数
+surf_det = cv2.xfeatures2d.SIFT_create()
 
 image_paths = []
 image_set = {}
@@ -57,17 +57,17 @@ def extraction_KeyPointAndEigenvector(img):
     dx = [-1, 1]
     dy = [1, -1]
     for i in range(len(des)):
-        x = int(points2f[i][0])
-        y = int(points2f[i][1])
+        y = int(points2f[i][0])
+        x = int(points2f[i][1])
 
         rgb_tmp = get_rgb(img, x+0, y+0)
         # for px in range(dx):
         #     for py in range(dy):
         #         rgb_tmp = np.hstack((rgb_tmp, get_rgb(img, x+px, y+py)))
-        # rgb_tmp = np.hstack((rgb_tmp, get_rgb(img, x, y-1)))
-        # rgb_tmp = np.hstack((rgb_tmp, get_rgb(img, x-1, y)))
-        # rgb_tmp = np.hstack((rgb_tmp, get_rgb(img, x+1, y)))
-        # rgb_tmp = np.hstack((rgb_tmp, get_rgb(img, x, y+1)))
+        rgb_tmp = np.hstack((rgb_tmp, get_rgb(img, x, y-1)))
+        rgb_tmp = np.hstack((rgb_tmp, get_rgb(img, x-1, y)))
+        rgb_tmp = np.hstack((rgb_tmp, get_rgb(img, x+1, y)))
+        rgb_tmp = np.hstack((rgb_tmp, get_rgb(img, x, y+1)))
         newdes = des[i]
         newdes = np.hstack((newdes, rgb_tmp))
         newdes_list.append(newdes)
