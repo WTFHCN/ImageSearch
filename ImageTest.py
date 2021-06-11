@@ -42,6 +42,7 @@ def test(N):
         tmp_str = "总体" + "识别率: " + \
             str(format(tot_true/tot_sum*100, '.2f') + '%\n')
         f.write(tmp_str)
+        f.write('\n\n\n')
 
 
 def main():

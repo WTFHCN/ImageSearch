@@ -22,37 +22,97 @@ class PictureSearch(QWidget):
         self.setPalette(self.palette)
         self.imgName = ""
         self.choose_lable = QLabel(self)
-        self.choose_lable.resize(300, 300)
-        self.choose_lable.move(80, 100)
+        self.choose_lable.resize(470, 470)
+        self.choose_lable.move(100, 140)
         self.choose_lable.setStyleSheet("QLabel{background:white;}")
 
-        self.search_lable = [0]*4
+        self.search_lable = [0]*9
         self.showans_lable = QLabel(self)
 
-        for i in range(4):
-            self.search_lable[i] = QLabel(self)
-            self.search_lable[i].resize(140, 140)
-            self.search_lable[i].setStyleSheet("QLabel{background:white;}")
-        self.search_lable[0].move(480, 100)
-        self.search_lable[1].move(480+150, 100)
-        self.search_lable[2].move(480, 100+150)
-        self.search_lable[3].move(480+150, 100+150)
+        for i in range(3):
+            for j in range(3):
+                index = i*3 + j
+                self.search_lable[index] = QLabel(self)
+                self.search_lable[index].resize(150, 150)
+                self.search_lable[index].move(750+160*i, 140+160*j)
+                self.search_lable[index].setStyleSheet(
+                    "QLabel{background:white;}")
 
         self.showans_lable.setText("")
-        self.showans_lable.resize(180, 30)
-        self.showans_lable.move(350, 430)
-        self.showans_lable.setStyleSheet("QLabel{background:white;}")
+        self.showans_lable.resize(200, 40)
+        self.showans_lable.move(560, 85)
+        self.showans_lable.setStyleSheet(''' 
+                     QLabel
+                     {text-align : center;
+                     background-color : pink;
+                     font: bold;
+                     border-color: gray;
+                     border-width: 2px;
+                     border-radius: 10px;
+                     padding: 6px;
+                     height : 14px;
+                     border-style: outset;
+                     font : 14px;}
+                     ''')
 
         self.choose_button = QPushButton(self)
         self.choose_button.setText("打开图片")
-        self.choose_button.move(130, 30)
-        self.choose_button.resize(200, 50)
+        self.choose_button.move(170, 75)
+        self.choose_button.resize(320, 50)
+        self.choose_button.setStyleSheet(''' 
+                     QPushButton
+                     {text-align : center;
+                     background-color : white;
+                     font: bold;
+                     border-color: gray;
+                     border-width: 2px;
+                     border-radius: 10px;
+                     padding: 6px;
+                     height : 14px;
+                     border-style: outset;
+                     font : 14px;}
+                     QPushButton:pressed
+                     {text-align : center;
+                     background-color : light gray;
+                     font: bold;
+                     border-color: gray;
+                     border-width: 2px;
+                     border-radius: 10px;
+                     padding: 6px;
+                     height : 14px;
+                     border-style: outset;
+                     font : 14px;}
+                     ''')
         self.choose_button.clicked.connect(self.choose_image)
 
         self.search_button = QPushButton(self)
         self.search_button.setText("检索图片")
-        self.search_button.move(520, 30)
-        self.search_button.resize(200, 50)
+        self.search_button.move(830, 75)
+        self.search_button.resize(320, 50)
+        self.search_button.setStyleSheet(''' 
+                     QPushButton
+                     {text-align : center;
+                     background-color : white;
+                     font: bold;
+                     border-color: gray;
+                     border-width: 2px;
+                     border-radius: 10px;
+                     padding: 6px;
+                     height : 14px;
+                     border-style: outset;
+                     font : 14px;}
+                     QPushButton:pressed
+                     {text-align : center;
+                     background-color : light gray;
+                     font: bold;
+                     border-color: gray;
+                     border-width: 2px;
+                     border-radius: 10px;
+                     padding: 6px;
+                     height : 14px;
+                     border-style: outset;
+                     font : 14px;}
+                     ''')
         self.search_button.clicked.connect(self.search_image)
 
     def choose_image(self):
@@ -80,7 +140,7 @@ class PictureSearch(QWidget):
         find_image_list = FindImage.search_image(self.imgName)
 
         self.showans_lable.setText(find_image_list[0][1])
-        for i in range(4):
+        for i in range(9):
             find_image, name = find_image_list[i]
 
             image = QtGui.QPixmap(find_image).scaled(

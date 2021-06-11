@@ -14,8 +14,8 @@ train_path = "train"  # 训练样本文件夹路径
 
 
 training_names = os.listdir(train_path)
-NUM_WORDS = 100  # 聚类中心数
-surf_det = cv2.xfeatures2d.SIFT_create()
+NUM_WORDS = 200  # 聚类中心数
+surf_det = cv2.xfeatures2d.SURF_create()
 
 image_paths = []
 image_set = {}
